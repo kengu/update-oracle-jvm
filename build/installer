@@ -36,8 +36,7 @@ echo "Press [ENTER] to keep suggested values"
 echo "-----------------------------------------------------"
 R=`prompt "Install JVMs into" "/usr/lib/jvm"`
 C=`prompt "Install config into" "/etc/update-oracle-jvm"`
-S=`prompt "Install script into" "/opt/utils"`
-A=`prompt "Add script to PATH" "y"`
+S=`prompt "Install script into" "/usr/sbin"`
 
 echo ""
 echo "Installing files...."

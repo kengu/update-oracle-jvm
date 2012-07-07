@@ -3,8 +3,9 @@
 #
 PROJ = update-oracle-jvm	# the name of the project
 OBJS = *			# folder with source files
-CONF = conf.d/config		# folder with source files
-EXCL = *~			# folder with source files
+COND = conf.d			# folder with configuration files
+CONF = config			# configuration file
+EXCL = *~			# excluded files
 
 #
 # Configuration
@@ -14,7 +15,7 @@ EXCL = *~			# folder with source files
 #
 # Run all commands
 #
-all: clean build
+all: clean build package 
 
 #
 # Clean previous builds
@@ -41,11 +42,11 @@ build : clean
 	@mkdir $(strip $(PROJ))-$(version)
 	@cp -R ../src $(strip $(PROJ))-$(version)
 	@cp installer $(strip $(PROJ))-$(version)/src
-	@cd $(strip $(PROJ))-$(version)/src; tar -zcvf ../$(strip $(PROJ)).tar.gz $(strip $(OBJS)) --exclude=$(strip $(CONF)) --exclude=$(strip $(EXCL));
+	@cd $(strip $(PROJ))-$(version)/src; tar -zcvf ../$(strip $(PROJ)).tar.gz $(strip $(OBJS)) --exclude=$(strip $(EXCL)) --exclude=$(strip $(COND))/$(strip $(CONF)) --exclude=$(strip $(COND))/$(strip $(EXCL));
 	@echo Build $(strip $(PROJ))-$(version): completed
 
 #
-# Self-extracting script (see http://www.linuxjournal.com/node/1005818)
+# Build Self-extracting script (see http://www.linuxjournal.com/node/1005818)
 #
 package : 
 	@if [ ! -d $(strip $(PROJ))-$(version) ]; then make build version=$(version); fi
