@@ -54,7 +54,7 @@ package :
 	@echo Building self-extracting package...
 	@echo --------------------------------------------------------
 	@if [ "$(version)" = "" ]; then echo Version is missing, execute \'"make" package version=...\'; exit 1; fi
-	@cd $(strip $(PROJ))-$(version); cat ../extractor $(strip $(PROJ)).tar.gz > $(strip $(PROJ)).bin; chmod +x $(strip $(PROJ)).bin 
+	@cd $(strip $(PROJ))-$(version); cat ../extractor $(strip $(PROJ)).tar.gz > $(strip $(PROJ))-$(version).bin; chmod +x $(strip $(PROJ))-$(version).bin 
 	@echo Package $(strip $(PROJ))-$(version): completed
 
 

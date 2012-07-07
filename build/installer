@@ -50,7 +50,9 @@ mkdir -p "$S"
 
 # Copy files into specified directories
 cp conf.d/* "$C/"
+echo "$C/"; ls "$C/"
 cp update-oracle-jvm "$S/" 
+ls "$S"/update-oracle-jvm
 
 # Set execution permission
 chmod +x "$S"/update-oracle-jvm
@@ -74,6 +76,7 @@ config "##"								"$C"
 config "##"								"$C"
 config "# Configurable parameters"					"$C"
 config "R=$R"								"$C"
+ls "$C"/config
 
 echo ""
 echo "Verifying...."
