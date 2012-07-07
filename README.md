@@ -1,7 +1,7 @@
 update-oracle-jvm
 =================
 
-Script for managing Oracle JVMs on Linux platforms (only tested debian).
+Script for managing Oracle JVMs on Linux platforms (only tested on Ubuntu 12.04 LTS).
 
 Install
 =======
