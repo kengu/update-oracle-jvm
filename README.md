@@ -12,11 +12,11 @@ wget +x https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-0
 ```
 2. Make binary executable
 ```
-chmod +x update-oracle-jvm-2.bin
+chmod +x update-oracle-jvm-0.3.bin
 ```
 3. Install update-oracle-jvm
 ```
-./update-oracle-jvm-2.bin
+./update-oracle-jvm-0.3.bin
 ```
 
 Usage
