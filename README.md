@@ -31,7 +31,7 @@ Usage
 Documentation (option -h)
 =========================
 
-![update-oracle-jvm-help](docs/help.jpg)
+![update-oracle-jvm-help](update-oracle-jvm/docs/help.jpg)
 
 Acknowledgements
 ================
