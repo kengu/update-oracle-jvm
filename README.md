@@ -31,7 +31,7 @@ Usage
 Documentation (option -h)
 =========================
 
-![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/docs/help.png)
+![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/help.png?raw=true)
 
 Acknowledgements
 ================
