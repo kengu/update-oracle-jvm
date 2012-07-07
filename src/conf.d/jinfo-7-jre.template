@@ -1,0 +1,22 @@
+name=$N
+alias=$N
+priority=$P
+section=main
+
+jre ControlPanel $R/$N/bin/ControlPanel
+jre java $R/$N/bin/java
+jre java_vm $R/$N/bin/java_vm
+jre javaws $R/$N/bin/javaws
+jre jcontrol $R/$N/bin/jcontrol
+jre keytool $R/$N/bin/keytool
+jre pack200 $R/$N/bin/pack200
+jre policytool $R/$N/bin/policytool
+jre rmid $R/$N/bin/rmid
+jre rmiregistry $R/$N/bin/rmiregistry
+jre unpack200 $R/$N/bin/unpack200
+jre orbd $R/$N/bin/orbd
+jre servertool $R/$N/bin/servertool
+jre tnameserv $R/$N/bin/tnameserv
+jre jexec $R/$N/lib/jexec
+plugin mozilla-javaplugin.so $R/$N/lib/amd64/libnpjp2.so
+plugin xulrunner-1.9-javaplugin.so $R/$N/lib/amd64/libnpjp2.so

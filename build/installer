@@ -1,0 +1,85 @@
+#!/bin/bash
+
+
+#============================================
+# Functions
+#============================================
+
+function prompt {
+  read -p "$1 [$2]: " -e I
+  if [ "$I" = "" ]; then echo "$2"; else echo "$I"; fi
+}
+
+function config {
+  echo "$1" >> "$2/config"
+}
+
+# ===========================================
+# Ensure root or sudo
+# ===========================================
+
+if [ ! $( id -u ) -eq 0 ]; then
+  echo "You must be root or use sudo"
+  exit 1
+fi
+
+#============================================
+# Installer script
+#============================================
+
+echo ""
+echo "====================================================="
+echo "Running update-oracle-jvm installer..."
+echo "====================================================="
+echo ""
+echo "Press [ENTER] to keep suggested values"
+echo "-----------------------------------------------------"
+R=`prompt "Install JVMs into" "/usr/lib/jvm"`
+C=`prompt "Install config into" "/etc/update-oracle-jvm"`
+S=`prompt "Install script into" "/opt/utils"`
+A=`prompt "Add script to PATH" "y"`
+
+echo ""
+echo "Installing files...."
+echo "-----------------------------------------------------"
+
+# Ensure paths
+mkdir -p "$R"
+mkdir -p "$C"
+mkdir -p "$S"
+
+# Copy files into specified directories
+cp conf.d/* "$C/"
+cp update-oracle-jvm "$S/" 
+
+# Set execution permission
+chmod +x "$S"/update-oracle-jvm
+
+# Delete old configuration file
+if [ -f "$C"/config ]; then rm "$C"/config; fi
+
+# Create new configuration file
+touch "$C"/config
+
+# Set configuration
+config "#!/bin/bash" 							"$C"
+config "" 								"$C"
+config "## ===================================================="	"$C"
+config "## install-oracle-jvm configuration file"			"$C"
+config "## ===================================================="	"$C"
+config "##"								"$C"
+config "## This configuration file uses bash syntax and "		"$C"
+config "## is sourced by bash script install-oracle-jvm"		"$C"
+config "##"								"$C"
+config "##"								"$C"
+config "# Configurable parameters"					"$C"
+config "R=$R"								"$C"
+
+echo ""
+echo "Verifying...."
+echo "-----------------------------------------------------"
+bash -c "$S"/update-oracle-jvm
+
+echo "-----------------------------------------------------"
+echo "update-oracle-jvm: Installed"
+echo "====================================================="

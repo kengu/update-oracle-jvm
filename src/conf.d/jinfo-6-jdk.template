@@ -1,0 +1,51 @@
+name=$N
+alias=$N
+priority=$P
+section=main
+
+jre ControlPanel $R/$N/jre/bin/ControlPanel
+jre java $R/$N/jre/bin/java
+jre java_vm $R/$N/jre/bin/java_vm
+jre javaws $R/$N/jre/bin/javaws
+jre jcontrol $R/$N/jre/bin/jcontrol
+jre keytool $R/$N/jre/bin/keytool
+jre pack200 $R/$N/jre/bin/pack200
+jre policytool $R/$N/jre/bin/policytool
+jre rmid $R/$N/jre/bin/rmid
+jre rmiregistry $R/$N/jre/bin/rmiregistry
+jre unpack200 $R/$N/jre/bin/unpack200
+jre orbd $R/$N/jre/bin/orbd
+jre servertool $R/$N/jre/bin/servertool
+jre tnameserv $R/$N/jre/bin/tnameserv
+jre jexec $R/$N/jre/lib/jexec
+jdk HtmlConverter $R/$N/bin/HtmlConverter
+jdk appletviewer $R/$N/bin/appletviewer
+jdk apt $R/$N/bin/apt
+jdk extcheck $R/$N/bin/extcheck
+jdk idlj $R/$N/bin/idlj
+jdk jar $R/$N/bin/jar
+jdk jarsigner $R/$N/bin/jarsigner
+jdk javac $R/$N/bin/javac
+jdk javadoc $R/$N/bin/javadoc
+jdk javah $R/$N/bin/javah
+jdk javap $R/$N/bin/javap
+jdk jconsole $R/$N/bin/jconsole
+jdk jdb $R/$N/bin/jdb
+jdk jhat $R/$N/bin/jhat
+jdk jinfo $R/$N/bin/jinfo
+jdk jmap $R/$N/bin/jmap
+jdk jps $R/$N/bin/jps
+jdk jrunscript $R/$N/bin/jrunscript
+jdk jsadebugd $R/$N/bin/jsadebugd
+jdk jstack $R/$N/bin/jstack
+jdk jstat $R/$N/bin/jstat
+jdk jstatd $R/$N/bin/jstatd
+jdk native2ascii $R/$N/bin/native2ascii
+jdk rmic $R/$N/bin/rmic
+jdk schemagen $R/$N/bin/schemagen
+jdk serialver $R/$N/bin/serialver
+jdk wsgen $R/$N/bin/wsgen
+jdk wsimport $R/$N/bin/wsimport
+jdk xjc $R/$N/bin/xjc
+plugin mozilla-javaplugin.so $R/$N/jre/lib/amd64/libnpjp2.so
+plugin xulrunner-1.9-javaplugin.so $R/$N/jre/lib/amd64/libnpjp2.so

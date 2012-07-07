@@ -1,0 +1,13 @@
+#!/bin/bash
+
+## ====================================================
+## install-oracle-jvm configuration file
+## ====================================================
+##
+## This configuration file uses bash syntax and 
+## is sourced by bash script install-oracle-jvm
+##
+##
+
+# Configurable parameters
+R="/usr/lib/jvm"

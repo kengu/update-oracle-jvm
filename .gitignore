@@ -1,0 +1,5 @@
+# Ignore builds
+update-oracle-jvm-*
+
+# Ignore gedit backup files
+*~
