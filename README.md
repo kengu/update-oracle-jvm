@@ -8,7 +8,7 @@ Install
 
 1. Download [latest version](https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-0.3.bin)
 ```
-wget +x https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-0.3.bin
+wget https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-0.3.bin
 ```
 2. Make binary executable
 ```
