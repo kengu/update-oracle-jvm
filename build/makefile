@@ -42,6 +42,7 @@ build : clean
 	@mkdir $(strip $(PROJ))-$(version)
 	@cp -R ../src $(strip $(PROJ))-$(version)
 	@cp installer $(strip $(PROJ))-$(version)/src
+	@echo $(strip $(version)) > $(strip $(PROJ))-$(version)/src/conf.d/version
 	@cd $(strip $(PROJ))-$(version)/src; tar -zcvf ../$(strip $(PROJ)).tar.gz $(strip $(OBJS)) --exclude=$(strip $(EXCL)) --exclude=$(strip $(COND))/$(strip $(CONF)) --exclude=$(strip $(COND))/$(strip $(EXCL));
 	@echo Build $(strip $(PROJ))-$(version): completed
 

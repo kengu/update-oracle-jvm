@@ -6,9 +6,9 @@ Script for managing Oracle JVMs on Linux platforms (only tested on Ubuntu 12.04 
 Install
 =======
 
-1. Download [latest version](https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-0.2.bin)
+1. Download [latest version](https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-0.3.bin)
 ```
-wget +x https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-0.2.bin
+wget +x https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-0.3.bin
 ```
 2. Make binary executable
 ```

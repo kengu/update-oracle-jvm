@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #============================================
-# Setup parameters
+# Setup parameters (replaced by installer)
 #============================================
-C="/etc/update-oracle-jvm"
+C="conf.d" # Don't touch!
 
 # ===========================================
 # Functions
@@ -14,9 +14,9 @@ function print_error {
 }
 
 function print_version {
-  echo -e "update-oracle-jvm : version 0.0.1"
-  echo -e "configuration file: $C/.config"
-  echo -e "template files    : $C/"
+  echo -e "update-oracle-jvm : version `cat $C/version`"
+  echo -e "configuration file: $C/config"
+  echo -e "template directory: $C/"
   cd "$C"
   L=`ls -h jinfo*`
   echo "$L"

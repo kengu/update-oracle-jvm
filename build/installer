@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#============================================
+# Get source path
+#============================================
+I="$( dirname "$( which "$0" )" )"
 
 #============================================
 # Functions
@@ -48,10 +52,11 @@ mkdir -p "$C"
 mkdir -p "$S"
 
 # Copy files into specified directories
-cp conf.d/* "$C/"
-echo "$C/"; ls "$C/"
-cp update-oracle-jvm "$S/" 
-ls "$S"/update-oracle-jvm
+cp "$I"/conf.d/* "$C/"
+cp "$I"/update-oracle-jvm "$S/" 
+
+# Set configuration path using in-place editing
+sed -i "s|^C=\"conf.d\"|C=\"$C\"|" "$S"/update-oracle-jvm
 
 # Set execution permission
 chmod +x "$S"/update-oracle-jvm
@@ -80,7 +85,7 @@ ls "$C"/config
 echo ""
 echo "Verifying...."
 echo "-----------------------------------------------------"
-bash -c "$S"/update-oracle-jvm
+bash -c "$S/update-oracle-jvm -v"
 
 echo "-----------------------------------------------------"
 echo "update-oracle-jvm: Installed"
