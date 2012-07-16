@@ -29,9 +29,9 @@ function print_help {
   echo -e "OPTIONS:"
   echo -e "	-j,--jvm	Oracle JVM version (6|7)"
   echo -e "	-p,--priority	Used as update-alternatives group priority (integer)"
-  echo -e "	-d,--jdk	Install JVM as JDK (will only work if given JVM is a JDK build)"
-  echo -e "	-l,--link	Link JVM as latest build of given JVM version (oracle-*-jre|oracle-*-jdk)"
-  echo -e "	-u,--update	Set as default JVM (update-java-alternatives -s <JVM>)"
+  echo -e "	-k,--jdk	Install JVM as JDK (will only work if given FILE is a JDK build)"
+  echo -e "	-l,--latest	Link JVM as latest build of given JVM version (oracle-*-jre|oracle-*-jdk)"
+  echo -e "	-d,--default	Set as default JVM (update-java-alternatives -s <JVM>)"
   echo -e "	-v,--version	Displays script version and setup"
   echo -e "	-h,--help	Displays this help\n"
   echo -e "FILE:"
@@ -65,7 +65,7 @@ function set_params {
   # Note that we use `"$@"' to let each command-line parameter expand to a 
   # separate word. The quotes around `$@' are essential!
   # We need TEMP as the `eval set --' would nuke the return value of getopt.
-  TEMP=`getopt -o j:p:dluvh --long jvm:,priority:,jdk,link,update,version,help \
+  TEMP=`getopt -o j:p:kdluvh --long jvm:,priority:,jdk,latest,default,version,help \
      -n 'update-oracle-jvm' -- "$@"`
 
   # User-defined parameters sanity check
@@ -113,9 +113,9 @@ function set_params {
     case "$1" in
         -j|--jvm) 	V="$2" 				; shift 2 ;;
         -p|--priority) 	P="$2" 				; shift 2 ;;
-        -d|--jdk) 	T="jdk"; F="jre|jdk|plugin"	; shift ;;
-        -l|--link) 	L="TRUE"			; shift ;;
-        -u|--update) 	U="TRUE"			; shift ;;
+        -k|--jdk) 	T="jdk"; F="jre|jdk|plugin"	; shift ;;
+        -l|--latest) 	L="TRUE"			; shift ;;
+        -d|--default) 	U="TRUE"			; shift ;;
         -h|--help) print_help				; exit 0 ;;
         -v|--version) print_version			; exit 0 ;;
         --) 	   shift 				; break ;;
@@ -153,7 +153,7 @@ function set_params {
 function remove_alternatives {
   
   # Create filename
-  I="$R/.$1.jinfo"
+  local I="$R/.$1.jinfo"
 
   # does file exists?
   if [ -f "$I" ]
@@ -168,10 +168,10 @@ function remove_alternatives {
 function add_alternatives {
 
   # Create filename
-  I="$R/.$1.jinfo"
+  local I="$R/.$1.jinfo"
 
   # Create JVM name (template parameter)
-  N="$1"
+  local N="$1"
 
   # Create file from template
   echo "$(eval "echo \"$(cat $TPL)\"")" > "$I"
@@ -181,7 +181,6 @@ function add_alternatives {
   echo "Added: $I"
 
 }
-
 
 function install_jvm {
 
@@ -269,8 +268,11 @@ install_jvm "$JVM" "$F"
 if [ "$L" = "TRUE" ] 
 then
  
-  # Create default name
+  # Create default JVM name
   N="oracle-$V-$T"
+
+  # Remove current alternatives
+  remove_alternatives "$N" "$F"
 
   # Remove current link?
   if [ -d "$R/$N" ]; then rm "$R/$N"; fi
@@ -278,8 +280,8 @@ then
   # Make symbolic link
   ln -s "$R/$JVM" "$R/$N"
 
-  # Replace current name with default (forces default alternatives to be activated below)
-  JVM="$N"
+  # Install given alternatives
+  add_alternatives "$N" "$F"
 
 fi
 
@@ -287,12 +289,9 @@ fi
 if [ "$U" = "TRUE" ]
 then 
 
-  # Create filename
-  I="$R/.$1.jinfo"
+  # Create default JVM name
+  JVM="oracle-$V-$T"
 
-  # Install alternatives?
-  if [ ! -f "$I" ]; then add_alternatives "$JVM" "$F"; fi
-  
   # Set default JVM
   update-java-alternatives -s "$JVM"
   echo "Default JVM: $JVM"
