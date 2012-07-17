@@ -3,7 +3,7 @@
 #============================================
 # Setup parameters (replaced by installer)
 #============================================
-C="conf.d" # Don't touch!
+C="conf.d" # Don't change or touch!
 
 # ===========================================
 # Functions

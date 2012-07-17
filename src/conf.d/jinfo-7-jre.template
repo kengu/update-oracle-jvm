@@ -18,5 +18,11 @@ jre orbd $R/$N/bin/orbd
 jre servertool $R/$N/bin/servertool
 jre tnameserv $R/$N/bin/tnameserv
 jre jexec $R/$N/lib/jexec
-plugin mozilla-javaplugin.so $R/$N/lib/$A/libnpjp2.so
-plugin xulrunner-1.9-javaplugin.so $R/$N/lib/$A/libnpjp2.so
+plugin javaplugin.so $R/$N/lib/amd64/libnpjp2.so
+plugin mozilla-javaplugin.so $R/$N/lib/amd64/libnpjp2.so
+plugin firefox-javaplugin.so $R/$N//lib/amd64/libnpjp2.so
+plugin iceape-javaplugin.so $R/$N//lib/amd64/libnpjp2.so
+plugin iceweasel-javaplugin.so $R/$N//lib/amd64/libnpjp2.so
+plugin midbrowser-javaplugin.so $R/$N//lib/amd64/libnpjp2.so
+plugin xulrunner-javaplugin.so $R/$N//lib/amd64/libnpjp2.so
+plugin xulrunner-1.9-javaplugin.so $R/$N/lib/amd64/libnpjp2.so
