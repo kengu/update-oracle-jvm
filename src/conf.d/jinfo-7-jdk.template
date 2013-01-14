@@ -46,5 +46,5 @@ jdk serialver $R/$N/bin/serialver
 jdk wsgen $R/$N/bin/wsgen
 jdk wsimport $R/$N/bin/wsimport
 jdk xjc $R/$N/bin/xjc
-plugin mozilla-javaplugin.so $R/$N/jre/lib/amd64/libnpjp2.so
-plugin xulrunner-1.9-javaplugin.so $R/$N/jre/lib/amd64/libnpjp2.so
+plugin mozilla-javaplugin.so $R/$N/jre/lib/$A/libnpjp2.so
+plugin xulrunner-1.9-javaplugin.so $R/$N/jre/lib/$A/libnpjp2.so

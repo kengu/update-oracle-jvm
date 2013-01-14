@@ -31,7 +31,8 @@ function print_help {
   echo -e "	-p,--priority	Used as update-alternatives group priority (integer)"
   echo -e "	-d,--jdk	Install JVM as JDK (will only work if given JVM is a JDK build)"
   echo -e "	-l,--link	Link JVM as latest build of given JVM version (oracle-*-jre|oracle-*-jdk)"
-  echo -e "	-u,--update	Set as default JVM (update-java-alternatives -s <JVM>)"
+  echo -e "     -u,--update     Set as default JVM (update-java-alternatives -s <JVM>)"  
+  echo -e "	-n,--name	Set JVM name. Default name is name of extracted JVM directory"
   echo -e "	-v,--version	Displays script version and setup"
   echo -e "	-h,--help	Displays this help\n"
   echo -e "FILE:"
@@ -87,6 +88,7 @@ function set_params {
   F="jre|plugin"
   L="FALSE"
   U="FALSE"
+  N=""
 
   # ===========================================
   # Set parameters specified in .config
@@ -116,6 +118,7 @@ function set_params {
         -d|--jdk) 	T="jdk"; F="jre|jdk|plugin"	; shift ;;
         -l|--link) 	L="TRUE"			; shift ;;
         -u|--update) 	U="TRUE"			; shift ;;
+        -n|--name)	N="$2"				; shift ;;
         -h|--help) print_help				; exit 0 ;;
         -v|--version) print_version			; exit 0 ;;
         --) 	   shift 				; break ;;
@@ -185,17 +188,20 @@ function add_alternatives {
 
 function install_jvm {
 
+  # Detect 32|64 architecture
+  if [ -d "$TMP/$1/*/amd64" ]; then A="amd64"; else A="i386"; fi
+
   # Remove current alternatives
-  remove_alternatives "$1" "$2"
+  remove_alternatives "$1" "$3"
 
   # Remove current JVM?
-  if [ -d "$R/$1" ]; then rm -R "$R/$1"; echo "Removed JVM: $1"; fi
+  if [ -d "$R/$2" ]; then rm -R "$R/$2"; echo "Removed JVM: $2"; fi
 
   # Move JVM from temp to root directory
-  mv "$TMP/$1" "$R"
+  mv "$TMP/$1" "$R/$2"
 
   # Add new alternatives
-  add_alternatives "$1" "$2"
+  add_alternatives "$1" "$3"
 }
 
 
@@ -256,30 +262,33 @@ case "$V" in
   *) 	print_error "Illegal version: $V"; exit 1 ;;
 esac
 
-# Get path to extracted JVM
+# Get directory name of exteracted JVM
 JVM=`ls "$TMP"`
 
 # Verify extracted JVM
 if [ "$JVM" = "" ]; then print_error "Extracted JVM not found";  exit 1; fi
 
+# Use extracted JVM directory as JVM name?
+if [ "$N" = "" ]; then N="$JVM"; fi
+
 # Install JVM from temp
-install_jvm "$JVM" "$F"
+install_jvm "$JVM" "$N" "$F"
 
 # Link JVM as latest build of given JVM version?
 if [ "$L" = "TRUE" ] 
 then
  
   # Create default name
-  N="oracle-$V-$T"
+  D="oracle-$V-$T"
 
   # Remove current link?
-  if [ -d "$R/$N" ]; then rm "$R/$N"; fi
+  if [ -d "$R/$D" ]; then rm "$R/$D"; fi
 
   # Make symbolic link
-  ln -s "$R/$JVM" "$R/$N"
+  ln -s "$R/$N" "$R/$D"
 
   # Replace current name with default (forces default alternatives to be activated below)
-  JVM="$N"
+  N="$D"
 
 fi
 
@@ -288,14 +297,14 @@ if [ "$U" = "TRUE" ]
 then 
 
   # Create filename
-  I="$R/.$1.jinfo"
+  I="$R/.$N.jinfo"
 
   # Install alternatives?
-  if [ ! -f "$I" ]; then add_alternatives "$JVM" "$F"; fi
+  if [ ! -f "$I" ]; then add_alternatives "$N" "$F"; fi
   
   # Set default JVM
-  update-java-alternatives -s "$JVM"
-  echo "Default JVM: $JVM"
+  update-java-alternatives -s "$N"
+  echo "Default JVM: $N"
 
 fi
 
