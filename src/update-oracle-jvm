@@ -10,73 +10,132 @@ C="conf.d" # Don't touch!
 # ===========================================
 
 function print_error {
-  echo -e "Error: $1\n\nTerminating..."
+  if [ "$1" != "" ]; then echo -e "Error: $1\n"; fi
+  print_help "$2"
+  echo -e "\nTerminating..."
+  exit 1
 }
 
 function print_version {
-  echo -e "update-oracle-jvm : version `cat $C/version`"
-  echo -e "configuration file: $C/config"
-  echo -e "template directory: $C/"
+  echo "update-oracle-jvm configuration"
+  echo -e " version            : `cat $C/version`"
+  echo -e " configuration file : $C/config"
+  echo -e " template directory : $C/"
   cd "$C"
   L=`ls -h jinfo*`
   echo "$L"
 }
 
-function print_help {
-  if [ "$1" != "" ]; then echo -e "Error: $1\n"; fi 
-  echo -e "Usage: update-oracle-jvm [OPTIONS]... FILE..."
-  echo -e "Install Oracle JVM to [$R] with update-java-alteratives support.\n"
+function print_help {  
+
+  # ===========================================
+  # Print help for command
+  # ===========================================
+  case "$1" in
+      help|"") ;;
+      install)  print_install; exit 0;;
+      remove)  print_remove; exit 0;;
+      list)  print_list; exit 0;;
+      *) print_error "Unknown command: $1" ;;
+  esac
+
+  # ===========================================
+  # Print default help
+  # ===========================================
+  echo -e "Usage: update-oracle-jvm COMMAND [OPTIONS]...\n"
+  echo -e "Manage Oracle JVMs in [$R] with update-java-alteratives support.\n"
+  echo -e "COMMANDS:"
+  echo -e "   install   Install Oracle JVM"
+  echo -e "   remove    Remove Oracle JVM"
+  echo -e "   list      List all Oracle JVMs"
+  echo -e "   set       Set current Oracle JVM"
+  echo -e "   default   Set default Oracle JVM\n"
   echo -e "OPTIONS:"
-  echo -e "	-j,--jvm	Oracle JVM version (6|7)"
-  echo -e "	-p,--priority	Used as update-alternatives group priority (integer)"
-<<<<<<< HEAD
-  echo -e "	-d,--jdk	Install JVM as JDK (will only work if given JVM is a JDK build)"
-  echo -e "	-l,--link	Link JVM as latest build of given JVM version (oracle-*-jre|oracle-*-jdk)"
-  echo -e "     -u,--update     Set as default JVM (update-java-alternatives -s <JVM>)"  
-  echo -e "	-n,--name	Set JVM name. Default name is name of extracted JVM directory"
-=======
-  echo -e "	-k,--jdk	Install JVM as JDK (will only work if given FILE is a JDK build)"
-  echo -e "	-l,--latest	Link JVM as latest build of given JVM version (oracle-*-jre|oracle-*-jdk)"
-  echo -e "	-d,--default	Set as default JVM (update-java-alternatives -s <JVM>)"
->>>>>>> 5d9d281f35a2d9e8b843e68b45ad64be415cdc03
-  echo -e "	-v,--version	Displays script version and setup"
-  echo -e "	-h,--help	Displays this help\n"
-  echo -e "FILE:"
-  echo -e "	Absolute or relative URL to JVM file. Version 6 files"
-  echo -e "	are binary (*.bin) and version 7 are compressed" 
-  echo -e "	archives (*.tar.gz).\n\n"
+  echo -e "   -v,--version  Displays script version and setup"
+  echo -e "   -h,--help Displays this help\n"
   echo -e ""
   echo -e "Download Oracle JVMs from "
   echo -e ""
-  echo -e "		http://www.oracle.com/technetwork/java/javase/downloads/"
+  echo -e "   http://www.oracle.com/technetwork/java/javase/downloads/"
   echo -e ""
-  echo -e "You switch between installed JVMs by" 
+  echo -e "You can also switch between installed JVMs by" 
   echo -e ""
-  echo -e " 	update-java-alternatives -s <JVM>"
+  echo -e "   update-java-alternatives -s <JVM>"
   echo -e ""
   echo -e "and list all installed JVMs by" 
   echo -e ""
-  echo -e " 	update-java-alternatives -l"
+  echo -e "   update-java-alternatives -l"
   echo -e ""
 }
 
+function print_install {
+  if [ "$1" != "" ]; then echo -e "Error: $1\n"; fi 
+  echo -e "Usage: update-oracle-jvm install [OPTIONS]... FILE...\n"
+  echo -e "Install Oracle JVM to [$R] with update-java-alteratives support.\n"
+  echo -e "OPTIONS:"
+  echo -e "   -j,--jvm      Oracle JVM version (6|7)"
+  echo -e "   -n,--name     Set JVM name. Default name is name of extracted JVM directory"
+  echo -e "   -p,--priority	Used as update-alternatives group priority (integer)"
+  echo -e "   -k,--jdk	    Install JVM as JDK (will only work if given FILE is a JDK build)"
+  echo -e "   -l,--latest   Link JVM as latest build of given JVM version (oracle-*-jre|oracle-*-jdk)"
+  echo -e "   -d,--default  Set as default JVM (update-java-alternatives -s <JVM>)"
+  echo -e "   -v,--version	Displays script version and setup"
+  echo -e "   -h,--help	    Displays this help\n"
+  echo -e "FILE:"
+  echo -e "   Absolute or relative URL to JVM file. "
+  echo -e "   Java 6 JVM files are binary (*.bin)."
+  echo -e "   Java 7 JVM files are compressed archives (*.tar.gz).\n\n"
+  if [ "$1" != "" ]; then 
+    echo -e "Terminating..."
+    exit 1
+  fi
+}
 
+function print_remove {
+  if [ "$1" != "" ]; then echo -e "Error: $1\n"; fi 
+  echo -e "Usage: update-oracle-jvm remove NAME\n"
+  echo -e "Remove Oracle JVM from [$R].\n"
+  echo -e "NAME: JVM name"
+  echo -e ""
+  if [ "$1" != "" ]; then 
+    echo -e "\nTerminating..."
+    exit 1
+  fi
+}
 
+function print_list {
+  if [ "$1" != "" ]; then echo -e "Error: $1\n"; fi 
+  echo -e "Usage: update-oracle-jvm list\n"
+  echo -e "List all Oracle JVMs in [$R].\n"
+  echo -e ""
+  if [ "$1" != "" ]; then 
+    echo -e "\nTerminating..."
+    exit 1
+  fi
+}
+
+# =============================================
+# Parse command arguments into parameters
+# =============================================
 function set_params {
+
+  # ===========================================
+  # Get command name
+  # ===========================================
+  A="$1";
 
   # ===========================================
   # Define getopt parameters
   # ===========================================
 
-
   # Note that we use `"$@"' to let each command-line parameter expand to a 
   # separate word. The quotes around `$@' are essential!
   # We need TEMP as the `eval set --' would nuke the return value of getopt.
-  TEMP=`getopt -o j:p:kdluvh --long jvm:,priority:,jdk,latest,default,version,help \
+  TEMP=`getopt -o j:n:p:kldvh --long jvm:,name:,priority:,jdk,latest,default,version,help \
      -n 'update-oracle-jvm' -- "$@"`
 
   # User-defined parameters sanity check
-  if [ $? != 0 ] ; then print_error "Failed to configure parameters" >&2 ; exit 1 ; fi
+  if [ $? != 0 ] ; then print_error "Failed to configure parameters"; fi
 
   # ===========================================
   # Set temp directory
@@ -101,13 +160,13 @@ function set_params {
   # ===========================================
 
   # Verify configuration file
-  if [ ! -f "$C/config" ]; then print_error "Configuration file [$C/config] not found" ; exit 1 ; fi
+  if [ ! -f "$C/config" ]; then print_error "Configuration file [$C/config] not found"; fi
 
   # Defines parameter: R
   source "$C/config"
 
   # Verify configuration  
-  if [ "$R" = "" ]; then print_error "Parameter [R] not defined in [$C/config]" ; exit 1 ; fi
+  if [ "$R" = "" ]; then print_error "Parameter [R] not defined in [$C/config]"; fi
 
 
   # ===========================================
@@ -119,43 +178,31 @@ function set_params {
 
   while true ; do
     case "$1" in
-        -j|--jvm) 	V="$2" 				; shift 2 ;;
-        -p|--priority) 	P="$2" 				; shift 2 ;;
-<<<<<<< HEAD
-        -d|--jdk) 	T="jdk"; F="jre|jdk|plugin"	; shift ;;
-        -l|--link) 	L="TRUE"			; shift ;;
-        -u|--update) 	U="TRUE"			; shift ;;
-        -n|--name)	N="$2"				; shift ;;
-=======
-        -k|--jdk) 	T="jdk"; F="jre|jdk|plugin"	; shift ;;
-        -l|--latest) 	L="TRUE"			; shift ;;
-        -d|--default) 	U="TRUE"			; shift ;;
->>>>>>> 5d9d281f35a2d9e8b843e68b45ad64be415cdc03
-        -h|--help) print_help				; exit 0 ;;
-        -v|--version) print_version			; exit 0 ;;
-        --) 	   shift 				; break ;;
-        *) 	   print_help "Unknown argument: $1"	; exit 1 ;;
+        -j|--jvm) 	    V="$2" 				                    ; shift 2 ;;
+        -n|--name)      N="$2"                            ; shift ;;
+        -p|--priority) 	P="$2" 				                    ; shift 2 ;;
+        -k|--jdk) 	    T="jdk"; F="jre|jdk|plugin"	      ; shift ;;
+        -l|--latest) 	  L="TRUE"			                    ; shift ;;
+        -d|--default) 	U="TRUE"			                    ; shift ;;
+        -h|--help)      print_help				                ; exit 0 ;;
+        -v|--version)   print_version			                ; exit 0 ;;
+        --) 	          shift 				                    ; break ;;
+        *) 	            print_help "Unknown argument: $1"	; exit 1 ;;
     esac
   done
 
-  # Set JVM file
-  I="$1"
+  # Set last argument
+  I="$2"
 
   # Get JVM file extension
-  E=$(basename "$I")
+  E=$(basename "$2")
   E="${E##*.}"
 
   # ===========================================
   # Parameter sanity checks
   # ===========================================
 
-  if [ "$#" = 0 ]; then    		   print_help					; exit 1 ; fi
-  if [ "$V" != "6" -a "$V" != "7" ]; then  print_help "Illegal version: $V"		; exit 1 ; fi
-  case "$P" in ''|*[!0-9]*) 		   print_help "Illegal priority: $P"		; exit 1 ;; *) ;; esac
-  if [ "$I" = "" ]; then 		   print_help "JVM file not given"		; exit 1 ; fi
-  if [ "$V" = "6" -a "$E" != "bin" ]; then print_help "Expected *.bin, found $E"	; exit 1 ; fi
-  if [ "$V" = "7" -a "$E" != "gz" ]; then  print_help "Expected *.tar.gz, found $(basename "$I")"	; exit 1 ; fi
-  if [ ! -f "$I" ]; then 		   print_help "File [$I] does not exist"	; exit 1 ; fi
+  if [ "$#" = 0 ]; then print_help; exit 1 ; fi
 
   # ===========================================
   # Create abbrevated parameters
@@ -197,145 +244,211 @@ function add_alternatives {
 
 }
 
-function install_jvm {
-
-  # Detect 32|64 architecture
-  if [ -d "$TMP/$1/*/amd64" ]; then A="amd64"; else A="i386"; fi
-
-  # Remove current alternatives
-  remove_alternatives "$1" "$3"
-
-  # Remove current JVM?
-  if [ -d "$R/$2" ]; then rm -R "$R/$2"; echo "Removed JVM: $2"; fi
-
-  # Move JVM from temp to root directory
-  mv "$TMP/$1" "$R/$2"
-
-  # Add new alternatives
-  add_alternatives "$1" "$3"
-}
-
-
 # ===========================================
 # Ensure root or sudo
 # ===========================================
+function ensure_sudo {
+  if [ ! $( id -u ) -eq 0 ]; then
+    echo "You must be root or use sudo"
+    exit 1
+  fi
+}
 
-if [ ! $( id -u ) -eq 0 ]; then
-  echo "You must be root or use sudo"
-  exit 1
-fi
+# ===========================================
+# Install JVM
+# ===========================================
+function install_jvm {
+
+  # ===========================================
+  # Parameter sanity checks
+  # ===========================================
+
+  if [ "$V" != "6" -a "$V" != "7" ]; then   print_install "Illegal JVM version [$V]"; fi
+  case "$P" in ''|*[!0-9]*) 		            print_install "Illegal priority [$P]";; *) ;; esac
+  if [ "$I" = "" ]; then 		                print_install "JVM file not given"; fi
+  if [ ! -f "$I" ]; then 		                print_install "JVM file [$I] does not exist"; fi
+  if [ "$V" = "6" -a "$E" != "bin" ]; then  print_install "Expected *.bin, found $E"; fi
+  if [ "$V" = "7" -a "$E" != "gz" ]; then   print_install "Expected *.tar.gz, found $(basename "$I")"; fi
+
+  # ===========================================
+  # Ensure clean temporary folder
+  # ===========================================
+
+  # Remove temporary folder?
+  if [ -d "$TMP" ]; then rm -R "$TMP"; fi
+
+  # Ensure temporary folder exists
+  mkdir -p "$TMP"
+
+  # ===========================================
+  # Extract JVM to temp
+  # ===========================================
+
+  case "$V" in
+    6) 	cp "$I" "$TMP"
+	  cd "$TMP"
+	  I=$(basename "$I") 
+	  chmod +x "$I"
+	  sh "$I"
+	  rm "$I"
+	  cd -;;
+    7) 	tar -C "$TMP" -zxvf "$I";;
+    *) 	print_install "Illegal version: $V";;
+  esac
+
+  # ===========================================
+  # Install JVM
+  # ===========================================
+
+  # Get directory name of exteracted JVM
+  JVM=`ls "$TMP"`
+
+  # Verify extracted JVM
+  if [ "$JVM" = "" ]; then print_install "Extracted JVM not found"; fi
+
+  # Use extracted JVM directory as JVM name?
+  if [ "$N" = "" ]; then N="$JVM"; fi
+
+  # ===========================================
+  # Remove current JVM?
+  # ===========================================
+  if [ -d "$R/$N" ]; then remove_jvm "$N" "$F"; fi
+
+  # Detect 32|64 architecture
+  if [ -d "$TMP/$JVM/*/amd64" ]; then A="amd64"; else A="i386"; fi
+
+  # Move JVM from temp to root directory
+  mv "$TMP/$JVM" "$R/$N"
+
+  # ===========================================
+  # Add Java alternatives for this JVM
+  # ===========================================
+  add_alternatives "$N" "$F"
+
+  # ===========================================
+  # Add to list of managed JVMs
+  # ===========================================
+  echo "$N" >> "$R/.oracle-jvms"
+
+  # ===========================================
+  # Link JVM as latest build?
+  # ===========================================
+
+  if [ "$L" = "TRUE" ] 
+  then
+   
+    # Create default name
+    D="oracle-$V-$T"
+
+    # Remove current alternatives
+    remove_alternatives "$N" "$F"
+
+    # Remove current link?
+    if [ -d "$R/$D" ]; then rm "$R/$D"; fi
+
+    # Make symbolic link
+    ln -s "$R/$N" "$R/$D"
+
+    # Replace current name with default (forces default alternatives to be activated below)
+    N="$D"
+
+    # Install given alternatives
+    add_alternatives "$N" "$F"
+
+  fi
+
+  # ===========================================
+  # Set as default JVM?
+  # ===========================================
+  if [ "$U" = "TRUE" ]
+  then 
+
+    # Create filename
+    I="$R/.$N.jinfo"
+
+    # Install alternatives?
+    if [ ! -f "$I" ]; then add_alternatives "$N" "$F"; fi
+    
+    # Set default JVM
+    update-java-alternatives -s "$N"
+    echo "Default JVM: $N"
+
+  fi
+
+}
+
+# ===========================================
+# Remove JVM
+# ===========================================
+function remove_jvm {
+
+  # ===========================================
+  # Parameter sanity checks
+  # ===========================================
+
+  if [ "$1" = "" ]; then print_remove "JVM name is missing"; fi
+  if [ "$1" = "oracle-6-jre" ]; then print_remove "Default JVM [$1] can not be removed"; fi
+  if [ "$1" = "oracle-6-jdk" ]; then print_remove "Default JVM [$1] can not be removed"; fi
+  if [ "$1" = "oracle-7-jre" ]; then print_remove "Default JVM [$1] can not be removed"; fi
+  if [ "$1" = "oracle-7-jdk" ]; then print_remove "Default JVM [$1] can not be removed"; fi
+  if [ ! -d "$R/$1" ]; then print_remove "JVM [$1] does not exist"; fi
+
+  # ===========================================
+  # Remove current Java alternatives
+  # ===========================================
+  remove_alternatives "$1" "$2"
+  
+  # ===========================================
+  # Remove JVM
+  # ===========================================
+  rm -R "$R/$1";
+
+  # ===========================================
+  # Remove from list of managed JVMs
+  # ===========================================
+  sed /$1/d "$R"/.oracle-jvms > tmp && mv tmp "$R"/.oracle-jvms
+
+  # Notify
+  echo "Removed JVM: $1";
+
+}
+
+###############################################
+### MAIN SCRIPT
+###############################################
+
+# ===========================================
+# Sanity checks
+# ===========================================
+ensure_sudo
 
 # ===========================================
 # Set parameters 
 # ===========================================
-
 set_params "$@"
 
-
-#echo "Temp  : $TMP"
-#echo "Type  : $T"
-#echo "Filter: $F"
-#echo "Ver   : $V"
-#echo "Pri   : $P"
-#echo "Templ : $TPL"
-#echo "Link  : $L"
-#echo "Update: $U"
-#echo "File  : $I"
-#
-#exit 1
-
 # ===========================================
-# Remove temporary folder?
+# Print help for command
 # ===========================================
-
-if [ -d "$TMP" ]; then rm -R "$TMP"; fi
-
-# ===========================================
-# Ensure temporary folder exists
-# ===========================================
-
-mkdir -p "$TMP"
-
-# ===========================================
-# Install JVM in root directory
-# ===========================================
-
-# Extract JVM to temp
-case "$V" in
-  6) 	cp "$I" "$TMP"
-	cd "$TMP"
-	I=$(basename "$I") 
-	chmod +x "$I"
-	sh "$I"
-	rm "$I"
-	cd -;;
-  7) 	tar -C "$TMP" -zxvf "$I";;
-  *) 	print_error "Illegal version: $V"; exit 1 ;;
+case "$A" in
+    install)  install_jvm;;
+    remove)   remove_jvm "$I" "jre|jdk|plugin";;
+    list)     cat "$R/.oracle-jvms";;
+    help)     print_help "$2";;
+    *)        print_error "Unknown command [$A]";;
 esac
 
-# Get directory name of exteracted JVM
-JVM=`ls "$TMP"`
 
-# Verify extracted JVM
-if [ "$JVM" = "" ]; then print_error "Extracted JVM not found";  exit 1; fi
-
-# Use extracted JVM directory as JVM name?
-if [ "$N" = "" ]; then N="$JVM"; fi
-
-# Install JVM from temp
-install_jvm "$JVM" "$N" "$F"
-
-# Link JVM as latest build of given JVM version?
-if [ "$L" = "TRUE" ] 
-then
- 
-<<<<<<< HEAD
-  # Create default name
-  D="oracle-$V-$T"
-=======
-  # Create default JVM name
-  N="oracle-$V-$T"
->>>>>>> 5d9d281f35a2d9e8b843e68b45ad64be415cdc03
-
-  # Remove current alternatives
-  remove_alternatives "$N" "$F"
-
-  # Remove current link?
-  if [ -d "$R/$D" ]; then rm "$R/$D"; fi
-
-  # Make symbolic link
-  ln -s "$R/$N" "$R/$D"
-
-<<<<<<< HEAD
-  # Replace current name with default (forces default alternatives to be activated below)
-  N="$D"
-=======
-  # Install given alternatives
-  add_alternatives "$N" "$F"
->>>>>>> 5d9d281f35a2d9e8b843e68b45ad64be415cdc03
-
-fi
-
-# Set as default JVM?
-if [ "$U" = "TRUE" ]
-then 
-
-<<<<<<< HEAD
-  # Create filename
-  I="$R/.$N.jinfo"
-
-  # Install alternatives?
-  if [ ! -f "$I" ]; then add_alternatives "$N" "$F"; fi
-  
-=======
-  # Create default JVM name
-  JVM="oracle-$V-$T"
-
->>>>>>> 5d9d281f35a2d9e8b843e68b45ad64be415cdc03
-  # Set default JVM
-  update-java-alternatives -s "$N"
-  echo "Default JVM: $N"
-
-fi
-
+#echo "Command : $TMP"
+#echo "Temp    : $TMP"
+#echo "Type    : $T"
+#echo "Filter  : $F"
+#echo "Version : $V"
+#echo "Priority: $P"
+#echo "Templ   : $TPL"
+#echo "Latest  : $L"
+#echo "Default : $U"
+#echo "File    : $I"
+#
+#exit 1
 
