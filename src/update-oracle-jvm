@@ -36,6 +36,8 @@ function print_help {
       install)  print_install; exit 0;;
       remove)  print_remove; exit 0;;
       list)  print_list; exit 0;;
+      set)  print_set; exit 0;;
+      default)  print_default; exit 0;;
       *) print_error "Unknown command: $1" ;;
   esac
 
@@ -49,7 +51,7 @@ function print_help {
   echo -e "   remove    Remove Oracle JVM"
   echo -e "   list      List all Oracle JVMs"
   echo -e "   set       Set current Oracle JVM"
-  echo -e "   default   Set default Oracle JVM\n"
+#  echo -e "   default   Set default Oracle JVM\n"
   echo -e "OPTIONS:"
   echo -e "   -v,--version  Displays script version and setup"
   echo -e "   -h,--help Displays this help\n"
@@ -107,6 +109,18 @@ function print_list {
   if [ "$1" != "" ]; then echo -e "Error: $1\n"; fi 
   echo -e "Usage: update-oracle-jvm list\n"
   echo -e "List all Oracle JVMs in [$R].\n"
+  echo -e ""
+  if [ "$1" != "" ]; then 
+    echo -e "\nTerminating..."
+    exit 1
+  fi
+}
+
+function print_set {
+  if [ "$1" != "" ]; then echo -e "Error: $1\n"; fi 
+  echo -e "Usage: update-oracle-jvm set NAME\n"
+  echo -e "Set given JVM as current [$R] (same as update-java-alternatives -s <JVM>).\n"
+  echo -e "NAME: JVM name"
   echo -e ""
   if [ "$1" != "" ]; then 
     echo -e "\nTerminating..."
@@ -434,6 +448,7 @@ case "$A" in
     install)  install_jvm;;
     remove)   remove_jvm "$I" "jre|jdk|plugin";;
     list)     cat "$R/.oracle-jvms";;
+    set)     	update-java-alternatives -s "$I";;
     help)     print_help "$2";;
     *)        print_error "Unknown command [$A]";;
 esac
