@@ -25,7 +25,7 @@ Usage
 1. Download Oracle JVM(s) from http://www.oracle.com/technetwork/java/javase/downloads/
 2. Run 
 ```
-update-oracle-jvm [OPTIONS] FILE
+update-oracle-jvm install [OPTIONS] FILE...
 ```
 
 Documentation
