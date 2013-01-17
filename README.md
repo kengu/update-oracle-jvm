@@ -28,14 +28,37 @@ Usage
 update-oracle-jvm [OPTIONS] FILE
 ```
 
-Documentation (option -h or command `help [command]`)
-=====================================================
+Documentation
+=============
+
+```bash
+> update-oracle-jvm -h
+```
 
 ![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/help.png?raw=true)
-![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/help.png?raw=true)
+
+```bash
+> update-oracle-jvm help install
+```
+
 ![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/install.png?raw=true)
+
+```bash
+> update-oracle-jvm help remove
+```
+
 ![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/remove.png?raw=true)
+
+```bash
+> update-oracle-jvm help list
+```
+
 ![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/list.png?raw=true)
+
+```bash
+> update-oracle-jvm help set
+```
+
 ![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/set.png?raw=true)
 
 Acknowledgements
