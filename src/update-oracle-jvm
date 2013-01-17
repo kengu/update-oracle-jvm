@@ -50,7 +50,7 @@ function print_help {
   echo -e "   install   Install Oracle JVM"
   echo -e "   remove    Remove Oracle JVM"
   echo -e "   list      List all Oracle JVMs"
-  echo -e "   set       Set current Oracle JVM"
+  echo -e "   set       Set current Oracle JVM\n"
 #  echo -e "   default   Set default Oracle JVM\n"
   echo -e "OPTIONS:"
   echo -e "   -v,--version  Displays script version and setup"
@@ -110,6 +110,15 @@ function print_list {
   echo -e "Usage: update-oracle-jvm list\n"
   echo -e "List all Oracle JVMs in [$R].\n"
   echo -e ""
+  echo -e "You can also list installed JVMs by" 
+  echo -e ""
+  echo -e "   update-java-alternatives -s NAME"
+  echo -e ""
+  echo -e "NOTE:"
+  echo -e ""
+  echo -e "   This will include ALL JVMs detected" 
+  echo -e "   by update-java-alternatives."
+  echo -e ""
   if [ "$1" != "" ]; then 
     echo -e "\nTerminating..."
     exit 1
@@ -119,8 +128,12 @@ function print_list {
 function print_set {
   if [ "$1" != "" ]; then echo -e "Error: $1\n"; fi 
   echo -e "Usage: update-oracle-jvm set NAME\n"
-  echo -e "Set given JVM as current [$R] (same as update-java-alternatives -s <JVM>).\n"
-  echo -e "NAME: JVM name"
+  echo -e "Set given JVM as current [$R]\n"
+  echo -e "NAME: JVM name\n"
+  echo -e ""
+  echo -e "You can also switch between installed JVMs by" 
+  echo -e ""
+  echo -e "   update-java-alternatives -s NAME"
   echo -e ""
   if [ "$1" != "" ]; then 
     echo -e "\nTerminating..."

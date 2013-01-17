@@ -6,9 +6,9 @@ Script for managing Oracle JVMs on Linux platforms (only tested on Ubuntu 12.04 
 Install
 =======
 
-1. Download [latest version](https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-latest.bin)
+1. Download [latest version](https://dl.dropbox.com/u/14738337/git/update-oracle-jvm-latest.bin)
 ```
-wget https://github.com/downloads/kengu/update-oracle-jvm/update-oracle-jvm-latest.bin
+wget https://dl.dropbox.com/u/14738337/git/update-oracle-jvm-latest.bin
 ```
 2. Make binary executable
 ```
@@ -28,10 +28,15 @@ Usage
 update-oracle-jvm [OPTIONS] FILE
 ```
 
-Documentation (option -h)
-=========================
+Documentation (option -h or command `help [command]`)
+=====================================================
 
 ![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/help.png?raw=true)
+![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/help.png?raw=true)
+![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/install.png?raw=true)
+![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/remove.png?raw=true)
+![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/list.png?raw=true)
+![update-oracle-jvm-help](https://github.com/kengu/update-oracle-jvm/blob/master/docs/set.png?raw=true)
 
 Acknowledgements
 ================
